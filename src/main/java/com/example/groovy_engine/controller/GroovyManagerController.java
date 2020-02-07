@@ -1,7 +1,7 @@
 package com.example.groovy_engine.controller;
 
 import com.example.groovy_engine.model.ResponseVO;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,8 +18,9 @@ public class GroovyManagerController {
 //            multipartFile.transferTo(new File("src/main/java/com/example/groovy_engine/groovy/PersonScript.groovy"));
 
             InputStream inputStream = multipartFile.getInputStream();
-            OutputStream outputStream = new FileOutputStream(new File("src/main/java/com/example/groovy_engine/groovy/PersonScript.groovy"));
-            IOUtils.copy(inputStream,outputStream);
+//            OutputStream outputStream = new FileOutputStream(new File("src/main/java/com/example/groovy_engine/groovy/PersonScript.groovy"));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("src/main/java/com/example/groovy_engine/groovy/PersonScript.groovy")));
+            IOUtils.copy(inputStream,bufferedWriter);
 
         } catch (IOException e) {
             return ResponseVO.isFail();
