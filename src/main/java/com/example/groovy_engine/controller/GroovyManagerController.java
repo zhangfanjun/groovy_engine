@@ -1,6 +1,7 @@
 package com.example.groovy_engine.controller;
 
 import com.example.groovy_engine.mapper.GroovyContentMapper;
+import com.example.groovy_engine.model.GroovyContent;
 import com.example.groovy_engine.model.ResponseVO;
 import com.example.groovy_engine.service.GroovyManagerService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.List;
 
 @RequestMapping("/groovy")
 @RestController
@@ -40,7 +42,6 @@ public class GroovyManagerController {
         }else {
             return ResponseVO.isOk(result);
         }
-
     }
 
     /**
@@ -48,7 +49,16 @@ public class GroovyManagerController {
      */
     @RequestMapping("/db/person/show")
     public ResponseVO personGroovyShow() {
+        List<GroovyContent> list = groovyManagerService.dbShow("person");
+        return ResponseVO.isOk(list);
+    }
 
-        return ResponseVO.isOk(null);
+    public ResponseVO updatePersonById(long id){
+        String result = groovyManagerService.updatePersonById(id);
+        if(null==result){
+            return ResponseVO.isFail();
+        }else {
+            return ResponseVO.isOk(result);
+        }
     }
 }
